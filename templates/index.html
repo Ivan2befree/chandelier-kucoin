@@ -1,0 +1,166 @@
+{% include 'header.html' %}
+
+<div class="sticky-top p-2 shadow bg-dark" >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark container ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Kucoin Bot</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Signals</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Positions</a>
+              </li>
+            </ul>
+
+            <form action="" class="d-flex" method="POST">
+                <div class="btn-group" role="group">
+                  <button class="btn btn-outline-primary" value="Run" name="Bot">Run Bot</button>
+                  <button class="btn btn-outline-warning" value="Stop" name="Bot">Stop Bot</button>
+                </div>
+            </form> 
+          </div>
+        </div>
+      </nav>
+</div>
+
+
+
+<div class="container mt-3">
+    <h1>Signals</h1>
+</div>
+
+
+<div class="container mt-3 border  rounded  shadow p-5 "> 
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">side</th>
+            <th scope="col">price</th>
+            <th scope="col">time</th>
+            <th scope="col">size</th>
+            <th scope="col">status</th>
+            <th scope="col">exit time</th>
+            <th scope="col">exit price</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for signal in signals %}
+                <tr>
+                    <th scope="row">{{signal.id}}</th>
+                    <td>{{signal.symbol}}</td>
+                    <td>{{signal.side}}</td>
+                    <td>{{signal.price}}</td>
+                    <td>{{signal.time}}</td>
+                    <td>{{signal.size}}</td>
+                    <td>{{signal.status}}</td>
+                    <td>{{signal.exittime}}</td>
+                    <td>{{signal.exitprice}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="container mt-3">
+    <h1>Setting</h1>
+</div>
+
+
+
+<hr>
+<div class="container mt-3 border  rounded  shadow p-5 "> 
+    <div class="container text-center">
+        <div class="row align-items-start">
+          <div class="col">
+            <form action="{{url_for('index')}}" method="post" novalidate autocomplete="on" id='in_id'>
+                <div class="d-grid gap-2 col-6 mx-auto mb-2">
+                    {{form.csrf_token}}
+                    {{form.risk(class='form-control', placeholder='risk value', value='' )}}
+                    {{form.leverage(class='form-control', placeholder='leverage', value='' )}}
+                    {{form.TP(class='form-control', placeholder='TP', value='' )}}
+                    {{form.SL(class='form-control', placeholder='SL', value='' )}}
+                    {{form.timeframe(class='form-control')}}
+                    {{form.submit(class='btn btn-info', id='btn')}}
+                </div>
+            </form>
+          </div>
+          {% if user %}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{user.risk}}</li>
+                        <li class="list-group-item">{{user.leverage}}</li>
+                        <li class="list-group-item">{{user.TP}}</li>
+                        <li class="list-group-item">{{user.SL}}</li>
+                        <li class="list-group-item">{{user.timeframe}}</li>
+                    </ul>
+                </div>
+            </div>
+          {% endif%}
+        </div>
+    </div>
+</div>
+
+  
+<hr>
+<div class="container mt-3 border  rounded  shadow p-5 ">
+    <div class="row align-items-start">
+        <div class="col">
+          <div class="row centered-form">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <h1 class="panel-title">Add Symbol</h1>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" method="post" action="{{url_for('index')}}">
+                            <div class="list_wrapper">  
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
+                                        <div class="form-group">
+                                            <br>
+                                            <input name="list[0]" type="text" placeholder="Type Symbol Name" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1 col-sm-1 col-md-1">
+                                        <br>
+                                       <button class="btn btn-primary  list_add_button" type="button">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <input type="submit" value="add" class="btn btn-info btn-block">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col">
+            <h1 class="panel-title">Symbols</h1>
+            <br>
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {% for sym in syms %}
+                        <li class="list-group-item text-center "><strong>{{sym.symbol.upper()}}</strong></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<hr>
+
+
+
+{% include 'footer.html' %}
