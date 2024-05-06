@@ -27,6 +27,6 @@ SQLAlchemy==2.0.4
 typing-extensions==4.5.0
 urllib3==1.26.14
 websockets==10.4
-Werkzeug==2.2.3
+Werkzeug==3.0.3
 WTForms==3.0.1
 zipp==3.14.0
