@@ -11,7 +11,7 @@ idna==3.4
 importlib-metadata==6.0.0
 importlib-resources==5.12.0
 itsdangerous==2.1.2
-Jinja2==3.1.2
+Jinja2==3.1.4
 kucoin-futures-python==1.0.6
 kucoin-python==1.0.11
 Mako==1.2.4
